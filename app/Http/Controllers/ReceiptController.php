@@ -116,6 +116,7 @@ class ReceiptController extends Controller
         $receipt = Receipt::find($id);
         $receipt->status = $param['status'];
         $receipt->update();
+        //sau khi aipdate xong se quay tro ve trang cu
         return redirect()->back();
     }
 
