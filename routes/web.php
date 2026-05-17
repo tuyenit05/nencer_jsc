@@ -27,6 +27,10 @@ Route::group(['prefix' => 'category', 'middleware' => 'AuthMiddleware'], functio
 });
 // Route::group(, function() {
     Route::get('/dashboard', [DashboardController::class, 'board']);
+    Route::group(['prefix' => 'board'], function() {
+        Route::get('/', [DashboardController::class, 'board']);
+        Route::get('/chart-out-stock', [DashboardController::class, 'CalChartOutStock']);
+    });
     //router for category
     Route::group(['prefix' => 'categories'], function() {
        Route::get('/index', [CategoryController::class, 'index']);
