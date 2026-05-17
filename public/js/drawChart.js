@@ -1,50 +1,117 @@
-/*
-*draw bar chart for in and out stock or moth
-find to div id chartExportInMonth
-*/
-const chartExportInMonth = document.getElementById('chartExportInMonth');
+/**
+ * Define global init charts.
+ */
+var chartExportInMonth = null;
 
-new Chart(chartExportInMonth, {
-    type: 'bar',
-    data: {
-        labels: ['Ngày 01', 'Ngày 02', 'Ngày 03', 'Ngày 04', 'Ngày 05'],
-        datasets: [
-            {
-                label: 'Đơn nhập 01-08-2025',
-                data: [120, 150, 180, 90, 200],
-                backgroundColor: 'rgba(54, 162, 235, 0.7)',
-            },
-            {
-                label: 'Đơn xuất 01-08-2025',
-                data: [100, 140, 160, 120, 250],
-                backgroundColor: 'rgba(255, 99, 132, 0.7)',
-            }
-        ]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
+/**
+ * Using JS ajax call to server get data to charts.
+ * Response from server JSON format.
+ * JS decode JSON format and convert to array.
+ */
+$(document).ready(function () {
+    /**
+     * ***************************************************************************************
+     * *************** Innit page and call to calculate charts. ******************************
+     * ***************************************************************************************
+     */
+    calculateDataChartExportInMonth(null);
+
+    /**
+     * *****************************************************************************************************
+     * *************** Catch event selected data statistic and calculate data for charts. ******************
+     * *****************************************************************************************************
+     */
+    //--- 
+    $('#btnStatisticChart1').on('click', function () {
+        let monthOfChartOutStock = $('#txtChooseMonthForChart1').val(); 
+        calculateDataChartExportInMonth(monthOfChartOutStock);
+    });
+});
+
+/**
+ * Function call to server, calculate data statistic data in month.
+ * After calculate data and render chart in view.
+ * 
+ * @param month month of selected, default current month.
+ * @return void
+ */
+function calculateDataChartExportInMonth(monthOfChartOutStock) {
+    // Call to server to receipt out stock per month.
+    $.ajax({
+        url: 'board/chart-out-stock', // Server URL
+        data: {
+            'month': monthOfChartOutStock ? monthOfChartOutStock : null   // Param send to server, month default current month.
+        }, 
+        type: 'GET',
+        success: function (responseData) {
+            // Catch data from server after process success.
+            console.log(responseData);
+            renderChartExportInMonth(
+                responseData.day_in_month,
+                responseData.in_stock,
+                responseData.out_stock
+            );
+        }
+    })
+}
+
+/**
+ * Draw bar chart for in and out sotock of month
+ * Find to div id chartExportInMonth
+ * 
+ * @param array List day in month.
+ * @param array InStock data in stock in month.
+ * @param array OutStock data out stock in month.
+ */
+function renderChartExportInMonth(dayInMonth, InStock, OutStock) {
+    if (chartExportInMonth !== null) {
+        chartExportInMonth.destroy();
+    }
+
+    const _chartExportInMonth = document.getElementById('chartExportInMonth');
+    chartExportInMonth = new Chart(_chartExportInMonth, {
+        type: 'bar',
+        data: {
+            labels: dayInMonth,
+            datasets: [
+                {
+                    label: 'Đơn nhập',
+                    data: InStock,
+                    backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                },
+                {
+                    label: 'Đơn xuất',
+                    data: OutStock,
+                    backgroundColor: 'rgba(255, 99, 132, 0.7)',
+                }
+            ]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
             }
         }
-    }
-});
-/**
- * draw pie chart for rate of in and out stock per month
- * find to div id areaImportExportRatioMonth
- */
-const _chartImportExportRatioMonth = document.getElementById('chartImportExportRatioMonth');
+    });
+}
 
-new Chart(_chartImportExportRatioMonth, {
+
+/**
+ * Draw pie chart for export and import ratio per month
+ * Find to div id chartImportExportRatio
+ */
+const _chartImportExportRatio = document.getElementById('chartImportExportRatio');
+new Chart(_chartImportExportRatio, {
     type: 'pie',
     data: {
         labels: [
-            'Đơn Nhập',
-            'Đơn Xuất'
+            'Đơn nhập',
+            'Đơn xuất'
         ],
         datasets: [{
-            label: 'thống kê tỉ lệ nhâp xuất trong tháng',
-            data: [300, 50, 100],
+            label: 'Thống kê tỷ lệ nhập xuất trong tháng.',
+            data: [300, 100],
             backgroundColor: [
                 'rgb(255, 99, 132)',
                 'rgb(255, 205, 86)'
@@ -53,26 +120,23 @@ new Chart(_chartImportExportRatioMonth, {
         }]
     },
 });
-/**
- * draw line chart for interest rate 
- * find to div id chartInterestRate
- */
-const chartInterestRate = document.getElementById('chartInterestRate');
 
-new Chart(chartInterestRate, {
+/**
+ * Draw line chart for interest rate.
+ * Find to div id chartInterestRate
+ */
+const _chartInterestRate = document.getElementById('chartInterestRate');
+new Chart(_chartInterestRate, {
     type: 'line',
     data: {
         labels: ['Ngày 01', 'Ngày 02', 'Ngày 03', 'Ngày 04', 'Ngày 05', 'Ngày 06', 'Ngày 07'],
-        datasets: [
-            {
-                label: 'lãi suất.',
-                data: [120, 150, 180, 90, 200, 170, 250],
-                backgroundColor:  'rgba(255, 99, 132, 0.7)',
-                fill : false,
-                borderColor: 'rgba(255, 99, 132, 1)',
-                tension: 0.1
-            },
-        ]
+        datasets: [{
+            label: 'Lãi suất.',
+            data: [65, 59, 80, 81, 56, 55, 40],
+            fill: false,
+            borderColor: 'rgb(255, 99, 132)',
+            tension: 0.1
+        }]
     },
     options: {
         scales: {
@@ -82,21 +146,23 @@ new Chart(chartInterestRate, {
         }
     }
 });
-/*
- * draw bar chart for product category
- * find to div id chartProductCategory
- */
-const chartProductCategory = document.getElementById('chartProductCategory');
 
-new Chart(chartProductCategory, {
+/**
+ * Draw bar chart for in and out sotock of month
+ * Find to div id chartExportInMonth
+ */
+const _chartByCategory = document.getElementById('chartByCategory');
+new Chart(_chartByCategory, {
     type: 'bar',
     data: {
-        labels: ['laptop','pc', 'Điện thoại', 'Ti vi', 'phụ kiện'],
-        datasets: [{
-            label: 'Tổng đơn theo danh mục.',
-            data: [120, 150, 180, 90],
-            backgroundColor: 'rgba(54, 162, 235, 0.7)',
-        }]
+        labels: ['Laptop', 'PC', 'Điện thoại', 'Ti vi', 'Phụ kiện'],
+        datasets: [
+            {
+                label: 'Tổng đơn theo danh mục.',
+                data: [120, 170, 150, 180, 90],
+                backgroundColor: 'rgba(54, 162, 235, 0.7)',
+            }
+        ]
     },
     options: {
         scales: {

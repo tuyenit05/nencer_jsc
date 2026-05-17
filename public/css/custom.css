@@ -2,6 +2,7 @@
 * CSS for global element item
 */
 .card-section {
+    margin: 0 auto;
     border-radius: 10px;
     background-color: #EEf3ff;
     padding: 25px;
@@ -34,16 +35,17 @@
 }
 .box-total {
     border-radius: 10px;
-     color: white;
+    color: white;
     width: 23%;
-    margin: 1.5%;
+    margin-left: 1.5%;
 }
 .txt-choose-month {
     width: 250px;
 }
-.table thead {
+.table thead td {
     background-color: #EEf3ff;
 }
+
 /*
 * CSS for specical element item
 */
@@ -60,10 +62,10 @@
 }
 #section-create-receipt {
     margin: 0 auto;
-    padding: 75px;
+    padding-bottom: 75px;
     margin-bottom: 50px;
 }
-/*xử lý cho phần admin*/
+/*Xu ly cho phan Admin*/
 #main {
     padding: 0;
     margin: 0;
@@ -76,14 +78,14 @@
 #logo {
     padding-top: 25px;
     padding-bottom: 25px;
-    border-bottom: 1px solid #99a2ad;
+    border-bottom: 1px solid #99A2AD;
 }
 #logo:hover {
     cursor: pointer;
-    color: #99A2AD
+    color: #99A2AD;
 }
-#sidebar #menu{
-    margin-top: 25px;
+#sidebar #menu {
+    margin-top: 25 px;
     padding-bottom: 25px;
 }
 #sidebar #menu ul {
@@ -92,19 +94,19 @@
 }
 #sidebar #menu ul li {
     list-style: none;
-    padding: 20px 10px 20px 50px;    /*top right bottom left*/
+    padding: 20px 10px 20px 50px ; /*Top right bottom left*/
 }
-#sidebar #menu ul li:hover{
-    background-color: #1e1e1e;
+#sidebar #menu ul li:hover {
+    background-color: #1e1e1e; 
     cursor: pointer;
 }
 #sidebar #menu ul li a {
     color: white;
-    text-decoration: none;           /*remove under line*/ 
+    text-decoration: none;         /*Remove under line*/
 }
 #header {
-    background-color: #eef3ff;
-    /*height: 50px;*/
+    background-color: #EEf3ff;
+    height: 50px;
 }
 #header-left {
     text-align: left;
@@ -114,38 +116,36 @@
     font-size: 18px;
     text-decoration: none;
 }
-header #logout a{
-    float :right;
-    padding-right: 25px;
+#header #logout a {
+    float: right;
+    padding-left: 25px;
     color: black;
     text-decoration: none;
-
 }
-#total{
+#total {
     margin-top: 25px;
     margin-bottom: 25px;
 }
 #order-shipping {
-    background-color: #0d6efd;
- 
+    background-color: #0D6EFD;
 }
-#order-in-stock{
-     background-color: #1cbe07;
+#order-in-stock {
+    background-color: #1CBE07;
 }
-#order-out-stock{
-    background-color: #ebbd27;
-
+#order-out-stock {
+    background-color: #EBBD27;
 }
-#order-profit{
-    background-color: #ff0000;
+#order-profit {
+    background-color: #FF0000;
 }
-.create_storage_box{
-    margin : 0 auto;
+#create_storage_box {
+    margin: 0 auto;
     margin-top: 50px;
 }
-.create_employee_box{
-    margin : 10% auto;
+#create_employee_box {
+    margin: 10% auto;
+    
 }
-#receipt_detail_box{
-    margin: 0 auto;
+#receipt_detail_box {
+    
 }
